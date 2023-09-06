@@ -4,4 +4,9 @@
 - Pycharm
 - Django
 - Python
-  
+
+## Criando um CRUD
+
+- Save
+- Update
+- Delete
