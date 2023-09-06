@@ -8,6 +8,21 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Seja bem vindo!</h1>
+<h1>Seja bem vindo!</h1>
+<h2>Esse é o sistema de contas a pagar e receber.</h2>
+
+<!--Use {chaves} para criar operações dentro do html-->
+<!--<p>Agora são: {{now}}</p>-->
+<ul>
+    {% for transacao in transacoes%}
+
+    {%if transacao == "T1"%}
+    <li><b>{{transacao}}</b></li>
+    {%else%}
+    <li>{{transacao}}</li>
+    {%endif%}
+
+    {%endfor%}
+</ul>
 </body>
 </html>

@@ -1,10 +1,32 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-import datetime
+from django.shortcuts import render, redirect
+
+from .form import TransacaoForm
+from .models import Transacao
 
 
 def home(request):
-    now = datetime.datetime.now()
-    #html = "<html><body>It is now %s.</body></html>" % now
+    data = {}
+    return render(request, "contas/home.html", data)
 
-    return render(request, "contas/home.html")
+
+def listagem(request):
+    data = {'transacoes': Transacao.objects.all()}
+    return render(request, "contas/listagem.html", data)
+
+
+def nova_transacao(request):
+    form = TransacaoForm(request.POST or None)  # se não tiver nada no request.POST, ele vai criar um formulário vazio
+
+    # Verificar se o form é válido
+    if form.is_valid():
+        form.save()
+        return redirect('url_listagem')  # ao salvar o formulário, redireciona para a página de listagem
+
+    return render(request, "contas/form.html", {'form': form})
+
+
+def update(request, pk): # pk é a chave primária do objeto que queremos atualizar
+    #pegar transação do banco de dados
+    transacao = Transacao.objects.filter(pk=pk)
+    # instanciando form
+    form = TransacaoForm(request.POST or None, instance=transacao)

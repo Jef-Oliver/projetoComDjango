@@ -12,6 +12,7 @@ class Categoria(models.Model):
 
 
 class Transacao(models.Model):
+
     data = models.DateTimeField()
     descricao = models.CharField(max_length=200)
     valor = models.DecimalField(max_digits=7, decimal_places=2)
