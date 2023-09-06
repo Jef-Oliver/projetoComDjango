@@ -25,8 +25,20 @@ def nova_transacao(request):
     return render(request, "contas/form.html", {'form': form})
 
 
-def update(request, pk): # pk é a chave primária do objeto que queremos atualizar
-    #pegar transação do banco de dados
-    transacao = Transacao.objects.filter(pk=pk)
+def update(request, pk):  # pk é a chave primária do objeto que queremos atualizar
+    # pegar transação do banco de dados
+    transacao = Transacao.objects.get(pk=pk)
     # instanciando form
     form = TransacaoForm(request.POST or None, instance=transacao)
+
+    if form.is_valid():
+        form.save()
+        return redirect('url_listagem')
+
+    return render(request, "contas/form.html", {'form': form, 'transacao': transacao})
+
+
+def delete(request, pk):
+    transacao = Transacao.objects.get(pk=pk) # Recupero a transação do banco de dados
+    transacao.delete() # Deleto a transação
+    return redirect('url_listagem') # Redireciono para a página de listagem
